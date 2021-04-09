@@ -1,7 +1,7 @@
 # Ecryption-RSA-ElGamal
 
 ## Requirements
-GCC or any other C++ compiler with standard libraries
+g++ or any other C++ compiler with standard libraries
 
 ## How to run
 * RSA
