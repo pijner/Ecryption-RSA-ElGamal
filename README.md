@@ -5,7 +5,7 @@ GCC or any other C++ compiler with standard libraries
 
 ## How to run
 * RSA
-  - Navigate to the RSA subfoler using a terminal and run the following command (switch ./ tp .\ for Windows)
+  - Navigate to the RSA subfoler using a terminal and run the following command (switch ./ to .\ for Windows)
 
         $ g++ *.cpp -o RSA-Cipher; ./RSA-Cipher
       
@@ -13,7 +13,7 @@ GCC or any other C++ compiler with standard libraries
   - The program will proceed to read and decrypt the `message.txt` file in the RSA directory.
 
 * ElGamal
-  - Navigate to the ElGamal subfoler using a terminal and run the following command (switch ./ tp .\ for Windows)
+  - Navigate to the ElGamal subfoler using a terminal and run the following command (switch ./ to .\ for Windows)
         
         $ g++ *.cpp -o ElGamal-Cipher; ./ElGamal-Cipher
   - The program will autonomously read the file and compute the decryption key to decrypt the file based on the parameters given inn the project requirement
