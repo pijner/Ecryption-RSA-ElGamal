@@ -31,7 +31,7 @@ int main()
 
     // Read given cipher message from file and decrypt and decode it
     encrypted = readCipherFromFile("message.txt");
-    std::vector<int>  decrypted = r.decrypt(encrypted, 6497);
+    std::vector<int>  decrypted = r.decrypt(encrypted);
     std::string decoded = r.decode(decrypted);
     std::cout << "\n\nMessage in file: \n";
     std::cout << decoded << std::endl;

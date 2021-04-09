@@ -11,6 +11,22 @@
 RSA::RSA(int n, int e) {
     this->_n = n;
     this->_e = e;
+
+    // calculate prime numbers that were used to select n
+    int p, q;
+    for (int i = 2; i < sqrt(_n); i++) {
+        if ((_n % i) == 0 && is_prime(i)) {
+            int factor2 = _n / i;
+            if (is_prime(factor2)) {
+                p = i, q = factor2;
+                break;
+            }
+        }
+    }
+
+    // calculate phi(n)
+    int phi = (p - 1) * (q - 1);
+    this->_d = mod_inverse(this->_e, phi);
 }
 
 /**
@@ -34,10 +50,10 @@ std::vector<int> RSA::encrypt(std::vector<int> encodedText) {
  * @param d decryption key for RSA
  * @return vector of integers encrypted using RSA
  */
-std::vector<int> RSA::decrypt(std::vector<int> encryptedText, int d) {
+std::vector<int> RSA::decrypt(std::vector<int> encryptedText) {
     std::vector<int> decrypted;
     for (int c : encryptedText) {
-        decrypted.push_back(this->fast_exponentiation(c, d));
+        decrypted.push_back(this->fast_exponentiation(c, this->_d));
     }
     return decrypted;
 }
@@ -117,3 +133,53 @@ int RSA::fast_exponentiation(int a, int x) {
     return y;
 }
 
+/**
+ * function to check if a number is prime or not
+ * 
+ * @param a number to check
+ * @return boolean value representing if the input if prime or not
+ */
+bool RSA::is_prime(int a) {
+    if (a < 1)
+        return false;
+    else if (a < 3) 
+        return true;
+    
+    for (int i = 5; i < sqrt(a); i += 6) {
+        if (a % i == 0 || a % (i + 6) == 0)
+            return false;
+    }
+
+    return true;
+}
+
+/**
+ * function to calculate inverse of a number in mod _p using euclidean algorithm
+ *
+ * @param a integer representing number whose inverse is to be calculated
+ * @return inverse of number
+ */
+int RSA::mod_inverse(int a, int mod) {
+    int x = 1, y = 0, s = 0, t = 1, m, n, q, r;
+    int p_temp = mod;
+
+    // euclidean algorithm
+    while (a) {
+        q = p_temp / a;
+        r = p_temp % a;
+
+        m = s - (q * x);
+        n = t - (q * y);
+
+        s = x;
+        x = m;
+
+        t = y;
+        y = n;
+
+        p_temp = a;
+        a = r;
+    }
+
+    return (s + mod) % mod;
+}
